@@ -1,1 +1,21 @@
-[0m[[0m[0mdebug[0m] [0m[0mJar uptodate: /home/apesch/Projects/revatureProject0/target/scala-2.13/bookapp_2.13-0.1.0-SNAPSHOT.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/apesch/Projects/revatureProject0/target/scala-2.13/bookapp_2.13-0.1.0-SNAPSHOT.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature/Cli.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature/Cli.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature/Runner$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature/Runner$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature/FileUtil$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature/FileUtil$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature/Cli$wordDefinition.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature/Cli$wordDefinition.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature/Cli$wordDefinition$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature/Cli$wordDefinition$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature/FileUtil.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature/FileUtil.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com/revature/Runner.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/apesch/Projects/revatureProject0/target/scala-2.13/classes/com/revature/Runner.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

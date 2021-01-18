@@ -4,6 +4,7 @@ import scala.io.StdIn
 import scala.util.matching.Regex
 import java.io.FileNotFoundException
 import java.util.Random
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * A CLI that allows the user to interact with our application
@@ -28,22 +29,24 @@ class Cli{
       */
     val commandArgPattern : Regex = "(\\w+)\\s*(.*)".r
     
+    class wordDefinition(var line : Int = 0, var word : String = "", var definition : String = "", var guessed : Boolean = false) {
+      //val length = word.length()
+      override def toString(): String = {
+                  s"""$word : $definition\" \n Found on line $line \n Has been guessed : $guessed"""
+              }
+    }
     /**
-      * @param longestStreak is an integer that says how long the longest streak is
       * @param longestStreakValues is the list of words that are in the longest streak
-      * @param currentStreak is an integer that records how long the current streak is. If it surpasses longestStreak, it replaces it
       * @param currentStreakValues is the list of words that are in the current streak. If it surpasses longestStreak, it replaces it
       */
-    var longestStreak: Int = 0
-    var longestStreakValues : Array[String] = Array()
-    var currentStreak: Int = 0
-    var currentStreakValues : Array[String] = Array()
+    var longestStreakValues = ArrayBuffer[String]()
+    var currentStreakValues = ArrayBuffer[String]()
 
     // longestWord holds the longest word that the player has guessed
-    var longestWord :String = ""
+    var longestWord : String = ""
 
     // guessedWordsArray is an array that says what words have been guessed and their definitions
-    var guessedWordsArray : Array[String] = Array()
+    var guessedWordsArray = ArrayBuffer[String]()
 
     /**
       * prints a greeting to the user
@@ -61,10 +64,10 @@ class Cli{
     def printOptions(): Unit = {
         println("Commands available:")
         println("newWord : prints a new definition for you to guess")
-
         println("exit : exits Dictionary Game CLI")
+
         println("Bonus Commands:")
-        println("printGuessedWords: prints a list of words you have already guessed")
+        println("guessedWords: prints a list of words you have already guessed")
         println("longestWord: prints the longest word you have guessed")
         println("longestStreak: prints the longest streak of correctly guessed words")
   }
@@ -75,6 +78,7 @@ class Cli{
       * The menu will interact with the user on a loop and call other methods/classes
       * in order to achieve the results of the user's commands
       */ 
+
       def menu() : Unit = {
           printWelcome()
           var continueMenuLoop = true
@@ -93,12 +97,29 @@ class Cli{
             val text = FileUtil.getTextContent("dictionarySmall.json")
             var textArray : Array[String] = text.split("\",")
             var guess : Array[String] = textArray(randDef).split(":")
-            var wordToGuess = guess(0)
-            var definitionToGuess = guess(1)
-            println(wordToGuess)
-            println(definitionToGuess + "\"")
-            //for(i <- 0 to str.length-1)
-            //println(str(i))
+            var wordToGuess = new wordDefinition (randDef, guess(0).replaceAll("""\"""","").replaceAll(" ",""), guess(1))
+            println(wordToGuess.word)
+            val usersGuess = StdIn.readLine()
+            if (usersGuess.equalsIgnoreCase(wordToGuess.word))
+            {
+              guessedWordsArray += wordToGuess.word
+              currentStreakValues += wordToGuess.word
+              println("You guessed it! You have successfully guessed " 
+              + guessedWordsArray.length + " words, " 
+              + currentStreakValues.length + " of which have been guessed consectutively!")
+              if (longestWord == "") {
+                println(wordToGuess.word + " is now your new longest word!")
+                longestWord = wordToGuess.word
+              }
+              else if(wordToGuess.word.length > longestWord.length)
+              {
+                println(s"You guessed a new longest word! $longestWord has been replaced by " + wordToGuess.word)
+                longestWord = wordToGuess.word
+              }
+            } else {
+              println("Sorry, that was not correct. Better luck next time!")
+              currentStreakValues = ArrayBuffer()
+            }
           } catch {
             case fnfe: FileNotFoundException => {
               println(s"Failed to find file: ${fnfe.getMessage}")
@@ -107,11 +128,11 @@ class Cli{
             }
             }
         } 
-        case commandArgPattern(cmd, arg) if cmd.equalsIgnoreCase("printGuessedWords") => {
+        case commandArgPattern(cmd, arg) if cmd.equalsIgnoreCase("guessedWords") => {
           if(guessedWordsArray.isEmpty) {
             println("It looks like you haven't successfully guessed any words yet. Keep at it!")
           } else {
-            println(guessedWordsArray)
+            printGuessedWordsArray()
           }
         }
         case commandArgPattern(cmd, arg) if cmd.equalsIgnoreCase("exit") => {
@@ -130,32 +151,38 @@ class Cli{
           println("Failed to parse any input")
         }
       }
+      if (currentStreakValues.length > longestStreakValues.length)
+      {
+        longestStreakValues = currentStreakValues
+      }
       printOptions()
     }
     println("Thank you for playing the Dictionary Game, goodbye!")
   }
 
   def returnLongestWord() = {
-    longestWord.length() match {
-      case zero if longestWord.length() <= 0 => {
+    longestWord.length match {
+      case zero if longestWord.length <= 0 => {
         println("It looks like you haven't successfully guessed any words yet. Keep at it!")
       }
       case _ => {
-        println(s"The longest word you guessed was ${longestWord}, which was ${longestWord.length()} characters long! Wow!")
+        println(s"The longest word you guessed was $longestWord, which was "+ longestWord.length +" characters long! Wow!")
       }
     }
   }
 
+  def printGuessedWordsArray() = {
+    println("You have guessed " + guessedWordsArray.length + " so far. Those words are: ")
+      println(guessedWordsArray.mkString("\n"))
+  }
+  def returnCurrentStreak() = {
+      println(s"Your current streak of words is ${currentStreakValues.length} words long. Those words were: ")
+      println(currentStreakValues.mkString("\n"))
+  }
+
   def returnLongestStreak() = {
-    try {
-      println(s"Your longest streak was ${longestStreak} words long. Those words were: ")
-    } catch {
-      case fnfe: FileNotFoundException => {
-        println(s"Failed to find file: ${fnfe.getMessage}")
-        println(s"""Found top level files:
-              ${FileUtil.getTopLevelFiles.mkString(", ")}""")
-      }
-    }
+      println(s"Your longest streak was ${longestStreakValues.length} words long. Those words were: ")
+      println(longestStreakValues.mkString("\n"))
   }
 
 }
