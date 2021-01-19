@@ -7,7 +7,7 @@ ThisBuild / organizationName := "revature"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "bookapp",
+    name := "revatureProject0",
     libraryDependencies += scalaTest % Test,
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     libraryDependencies += "org.postgresql" % "postgresql" % "42.2.18"
