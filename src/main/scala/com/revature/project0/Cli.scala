@@ -58,7 +58,7 @@ class Cli{
             var textArray : Array[String] = text.split("\",")
             var guess : Array[String] = textArray(randDef).split(":")
             var wordToGuess = new Word (randDef, guess(0).replaceAll("""\"""","").replaceAll(" ",""), guess(1),false)
-            println(wordToGuess.word)
+            println(wordToGuess.definition + """"""")
             val usersGuess = StdIn.readLine()
             if (usersGuess.equalsIgnoreCase(wordToGuess.word))
             {
