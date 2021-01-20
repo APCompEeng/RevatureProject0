@@ -104,7 +104,7 @@ class Cli{
           returnCurrentStreak()
         }
         case commandArgPattern(cmd, arg) => {
-          println(s"""Failed to parse command: "$cmd" with arguments: "$arg"""")
+          println(s"""Failed to parse command: "$cmd"""")
         }
         case _ => {
           println("Failed to parse any input")
@@ -127,26 +127,54 @@ class Cli{
   }
 
   def printWordsArray() = {
-      println("These are the words you have seen so far: ")
-      WordDao.getAll.foreach(println)
+    WordDao.getAll.length match {
+      case zero if WordDao.getAll.length <= 0 => {
+        println("\nIt looks like you haven't successfully guessed any words yet. Keep at it!\n")
+      }
+      case _ => {
+        println("These are the words you have seen so far: ")
+        WordDao.getAll.foreach(println)
+      }
+    }
   }
 
   def printGuessedWordsArray() = {
+    WordDao.getGuessed.length match {
+      case zero if WordDao.getGuessed.length <= 0 => {
+        println("\nIt looks like you haven't successfully guessed any words yet. Keep at it!\n")
+      }
+      case _ => {
       println("\nThese are the words you have guessed so far: ")
       WordDao.getGuessed.foreach(println)
       println("")
+      }
+    }
   }
 
   def returnCurrentStreak() = {
-      println("\nThese are the words you have guessed consecutively: ")
+    currentStreakValues.length match {
+      case zero if currentStreakValues.length <= 0 => {
+        println("\nIt looks like you haven't successfully guessed any words yet. Keep at it!\n")
+      }
+      case _ => {
+      println("\nThese are the words you have guessed consecutively this session: ")
       println(currentStreakValues.mkString("\n"))
       println("")
+      }
+    }
   }
 
   def returnLongestStreak() = {
-      println(s"\nYour longest streak was ${WordDao.getStreak.length} words long. Those words were: ")
-      println(WordDao.getStreak.mkString("\n"))
-      println("")
+    WordDao.getStreak.length match {
+      case zero if WordDao.getStreak.length <= 0 => {
+        println("\nIt looks like you haven't successfully guessed any words yet. Keep at it!\n")
+      }
+      case _ => {
+        println(s"\nYour longest streak was ${WordDao.getStreak.length} words long. Those words were: ")
+        println(WordDao.getStreak.mkString("\n"))
+        println("")
+      }
+    }
   }
 
 }
