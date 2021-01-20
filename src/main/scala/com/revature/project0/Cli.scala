@@ -24,7 +24,7 @@ class Cli{
     def printWelcome(): Unit = {
         println("Welcome to the Dictionary Game!\n"+
         "The rules are simple: you will be given a definition of a word, and you'll be asked to guess the word!\n"+
-        "If you can't guess the word, you can ask for a hint, or opt to skip\n"+
+        // "If you can't guess the word, you can ask for a hint, or opt to skip\n"+
         "Let's begin!")
     }
 
