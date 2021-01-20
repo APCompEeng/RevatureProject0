@@ -58,7 +58,7 @@ class Cli{
             var textArray : Array[String] = text.split("\",")
             var guess : Array[String] = textArray(randDef).split(":")
             var wordToGuess = new Word (randDef, guess(0).replaceAll("""\"""","").replaceAll(" ",""), guess(1),false)
-            println(wordToGuess.definition + """"""")
+            println("\n" + wordToGuess.definition + """"""")
             val usersGuess = StdIn.readLine()
             if (usersGuess.equalsIgnoreCase(wordToGuess.word))
             {
@@ -78,6 +78,7 @@ class Cli{
             } else {
               println("Sorry, that was not correct. Better luck next time!")
               WordDao.saveNewWord(wordToGuess)
+              currentStreakValues = ArrayBuffer[Word]()
             }
           } catch {
             case fnfe: FileNotFoundException => {
